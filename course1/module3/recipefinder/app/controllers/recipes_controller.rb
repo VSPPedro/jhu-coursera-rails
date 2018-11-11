@@ -1,6 +1,7 @@
 class RecipesController < ApplicationController
   def index
     params["search"] ||= "chocolate"
-    puts params["search"]
+    @recipes_found = Recipe.for(params["search"])
+    puts @recipes_found
   end
 end
