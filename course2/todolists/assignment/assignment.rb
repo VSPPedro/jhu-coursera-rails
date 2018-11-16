@@ -7,13 +7,14 @@ class Assignment
   # Insert rows in DB
   #
   def create_user(params)
-      User.create(params)
+    User.create(params)
   end
 
   def create_todolist(params)
-      # accept a hash of todolist properties (`:name` and `:due_date`) as an input parameter. Note these are not 100% the same as Model class.
-      # use the TodoList Model class to create a new user in the DB
-      # return an instance of the class with primary key (`id`), and dates (`created_at` and `updated_at`) assigned
+    params[:list_name] = params.delete :name
+    params[:list_due_date] = Date.today.to_s
+    params.delete :due_date
+    TodoList.create(params)
   end
 
   #
