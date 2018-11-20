@@ -45,12 +45,12 @@ Profile.create(
 
 # Create TodoLists
 User.all.each do |user|
-  TodoList.create(list_name: "Todo List", list_due_date: 2019, user: user)
+  TodoList.create(list_name: "Todo List", list_due_date: Date.today, user: user)
 end
 
 # Create TodoItem
 TodoList.all.each do |list|
   (0..4).each do
-    TodoItem.create(due_date: 2019, title: "Todom Item Title", description: "Todo Item Description", todo_list: list)
+    TodoItem.create(due_date: Date.today, title: "Todom Item Title", description: "Todo Item Description", todo_list: list)
   end
 end
