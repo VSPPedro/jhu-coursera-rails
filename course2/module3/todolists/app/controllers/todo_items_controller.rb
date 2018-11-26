@@ -5,6 +5,7 @@ class TodoItemsController < ApplicationController
   # GET /todo_items.json
   def index
     @todo_items = TodoItem.all
+    @number_of_completed_todos = number_of_completed_todos
   end
 
   # GET /todo_items/1
@@ -70,5 +71,9 @@ class TodoItemsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def todo_item_params
       params.require(:todo_item).permit(:due_date, :title, :description, :completed)
+    end
+
+    def number_of_completed_todos
+      TodoItem.where(completed: true).count
     end
 end
