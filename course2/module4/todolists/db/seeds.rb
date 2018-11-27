@@ -1,56 +1,27 @@
-# Clear Database
+today = Date.today
+two_days_ago = Date.today - 2.days
+three_days_ago = Date.today - 3.days
+dates = [today, two_days_ago, three_days_ago]
+
 User.destroy_all
-Profile.destroy_all
 TodoList.destroy_all
-TodoItem.destroy_all
 
-# Create Users
-fiorina = User.create(username: "Fiorina", password_digest: "password123")
-trump = User.create(username: "Trump", password_digest: "password123")
-carson = User.create(username: "Carson", password_digest: "password123")
-clinton = User.create(username: "Clinton", password_digest: "password123")
+100.times { |index| TodoList.create! list_name: "List #{index}", list_due_date: dates.sample }
 
-# Create Profiles
-Profile.create(
-  gender: "female",
-  birth_year: 1954,
-  first_name: "Carly",
-  last_name: "Fiorina",
-  user: fiorina
-)
-
-Profile.create(
-  gender: "male",
-  birth_year: 1946,
-  first_name: "Donald",
-  last_name: "Trump",
-  user: trump
-)
-
-Profile.create(
-  gender: "male",
-  birth_year: 1951,
-  first_name: "Ben",
-  last_name: "Carson",
-  user: carson
-)
-
-Profile.create(
-  gender: "female",
-  birth_year: 1947,
-  first_name: "Hillary",
-  last_name: "Clinton",
-  user: clinton
-)
-
-# Create TodoLists
-User.all.each do |user|
-  TodoList.create(list_name: "Todo List", list_due_date: Date.today, user: user)
+TodoList.all.each do |list|
+  list.todo_items.create! [
+    { title: "Task 1", due_date: dates.sample, description: "very important task TEST", completed: false },
+    { title: "Task 2", due_date: dates.sample, description: "do something else TEST", completed: true},
+    { title: "Task 3", due_date: dates.sample, description: "learn Action Pack TEST", completed: true}
+  ]
 end
 
-# Create TodoItem
+users = User.create! [
+  { username: "jim", password: "abc123" },
+  { username: "rich", password: "123abc" }
+]
+
 TodoList.all.each do |list|
-  (0..4).each do
-    TodoItem.create(due_date: Date.today, title: "Todom Item Title", description: "Todo Item Description", todo_list: list)
-  end
+  list.user = users.sample
+  list.save!
 end
