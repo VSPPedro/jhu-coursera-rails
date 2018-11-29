@@ -19,10 +19,8 @@ class SessionsController < ApplicationController
   # DELETE /sessions/1
   # DELETE /sessions/1.json
   def destroy
-    respond_to do |format|
-      format.html { redirect_to login_path, notice: 'Todo list was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    reset_session # wipe out session and everything in it
+    redirect_to login_path, notice: "You have been logged out"
   end
 
   private
